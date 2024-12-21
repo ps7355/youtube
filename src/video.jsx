@@ -1,7 +1,15 @@
 import React from "react";
-import { useCurrentFrame, interpolate, OffthreadVideo, staticFile, Audio, Sequence } from "remotion";
-import { Img } from "remotion";
+import {
+  useCurrentFrame,
+  interpolate,
+  OffthreadVideo,
+  staticFile,
+  Audio,
+  Sequence,
+  Img,
+} from "remotion";
 import { Video } from "remotion";
+
 // Explicitly list all 24 images
 const images = [
   staticFile("1 (1).jpeg"),
@@ -41,11 +49,10 @@ const YouTube = () => {
   const frame = useCurrentFrame();
   const fps = 30;
   const segmentDurationInFrames = fps * 15; // Duration of one segment in frames (15 seconds)
-  const gapDurationInFrames = fps * 1; // 1 second gap duration
 
   // Calculate the segment index (there are 8 segments in total)
-  const segmentIndex = Math.floor(frame / (segmentDurationInFrames + gapDurationInFrames)); // Including the gap
-  const startFrame = segmentIndex * (segmentDurationInFrames + gapDurationInFrames); // Starting frame for the current segment
+  const segmentIndex = Math.floor(frame / segmentDurationInFrames); // No gap
+  const startFrame = segmentIndex * segmentDurationInFrames; // Starting frame for the current segment
 
   // Calculate the image index based on the current segment and time
   const imageIndex = Math.floor((frame - startFrame) / (fps * 5)) % 3; // 3 images per segment, each lasts for 5 seconds

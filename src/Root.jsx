@@ -1,6 +1,5 @@
 import { Composition } from "remotion";
-import YouTube from "./video";
-
+import YouTube from "./video"
 export const RemotionRoot = () => {
   return (
     <>

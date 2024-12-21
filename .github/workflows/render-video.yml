@@ -1,4 +1,4 @@
-name: Render video
+name: Render videos
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   render:
-    name: Render video
+    name: Render videos
     runs-on: ubuntu-latest
 
     steps:
@@ -31,13 +31,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Render the video
-      - name: Render video
-        run: npx remotion render src/index.js demo out/video.mp4
+      # Render the videos (using a loop in bash)
+      - name: Render videos
+        run: |
+          for i in {1..8}; do
+            start_frame=$(( (i - 1) * 450 ))
+            end_frame=$(( i * 450 - 1 ))
+            npx remotion render src/index.js demo out/video"$i".mp4 --frames="$start_frame"-"$end_frame"
+          done
 
-      # Upload the rendered video as an artifact
-      - name: Upload rendered video
+      # Upload each rendered video as a separate artifact
+      - name: Upload rendered videos
         uses: actions/upload-artifact@v3
         with:
-          name: rendered-video
-          path: out/video.mp4
+          name: rendered-video-${{ github.run_number }}
+          path: |
+            out/video1.mp4
+            out/video2.mp4
+            out/video3.mp4
+            out/video4.mp4
+            out/video5.mp4
+            out/video6.mp4
+            out/video7.mp4
+            out/video8.mp4
