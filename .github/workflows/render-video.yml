@@ -31,12 +31,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Render the videos (using a loop in bash)
+      # Render the videos (CORRECTED loop)
       - name: Render videos
         run: |
           for i in {1..8}; do
             start_frame=$(( (i - 1) * 450 ))
-            end_frame=$(( i * 450 - 1 ))
+            end_frame=$(( start_frame + 449 )) # Corrected end_frame calculation
             npx remotion render src/index.js demo out/video"$i".mp4 --frames="$start_frame"-"$end_frame"
           done
 
