@@ -1,6 +1,7 @@
 import React from "react";
 import { useCurrentFrame, interpolate, OffthreadVideo, staticFile, Audio, Sequence } from "remotion";
-
+import { Img } from "remotion";
+import { Video } from "remotion";
 // Explicitly list all 24 images
 const images = [
   staticFile("1 (1).jpeg"),
@@ -70,7 +71,8 @@ const YouTube = () => {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
       {/* Background Video */}
-      <OffthreadVideo
+      <Video
+        loop
         src={staticFile("videoplayback.mp4")}
         style={{
           width: "100%",
@@ -79,11 +81,10 @@ const YouTube = () => {
           top: 0,
           left: 0,
         }}
-        loop
       />
 
       {/* Display the current image with transition */}
-      <img
+      <Img
         src={images[imageFileIndex]} // Dynamically display the current image
         alt={`Image ${imageFileIndex + 1}`}
         style={{
@@ -103,7 +104,7 @@ const YouTube = () => {
         from={startFrame}
         durationInFrames={audioDurationInFrames}
       >
-        <Audio src={audioFiles[audioIndex]} volume={0.2} />
+        <Audio src={audioFiles[audioIndex]} volume={0.1} />
       </Sequence>
     </div>
   );

@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.241",
+    "@remotion/media-utils": "^4.0.241",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "remotion": "4.0.241",
@@ -14,8 +15,8 @@
   },
   "devDependencies": {
     "@remotion/eslint-config": "4.0.241",
-    "prettier": "3.3.3",
-    "eslint": "8.56.0"
+    "eslint": "8.56.0",
+    "prettier": "3.3.3"
   },
   "scripts": {
     "dev": "remotion studio",
