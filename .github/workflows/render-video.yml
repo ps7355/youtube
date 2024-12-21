@@ -40,5 +40,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: rendered-video
-          path: out/video1.mp4
-
+          path: out/video.mp4
