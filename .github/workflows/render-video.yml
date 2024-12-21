@@ -1,30 +1,44 @@
 name: Render video
+
 on:
-  workflow_dispatch:
-    inputs:
-      titleText:
-        description: "Which text should it say?"
-        required: true
-        default: "Welcome to Remotion"
-      titleColor:
-        description: "Which color should it be in?"
-        required: true
-        default: "black"
+  push:
+    branches:
+      - main  # Triggers the workflow on push to the main branch
+  workflow_dispatch: # Allows manual trigger
+
 jobs:
   render:
     name: Render video
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@main
-      - uses: actions/setup-node@main
-      - run: sudo apt update
-      - run: sudo apt install ffmpeg
-      - run: npm i
-      - run: echo $WORKFLOW_INPUT > input-props.json
-        env:
-          WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-      - run: npm run build -- --props="./input-props.json"
-      - uses: actions/upload-artifact@v2
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          name: video.mp4
+          node-version: 18
+
+      # Step 3: Install FFmpeg
+      - name: Install FFmpeg
+        run: |
+          sudo apt update
+          sudo apt install -y ffmpeg
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Render the video
+      - name: Render video
+        run: npx remotion render src/YouTube.tsx out/video.mp4
+
+      # Step 6: Upload the rendered video
+      - name: Upload video artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rendered-video
           path: out/video.mp4
