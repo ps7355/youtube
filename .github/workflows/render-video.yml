@@ -3,8 +3,8 @@ name: Render video
 on:
   push:
     branches:
-      - main  # Triggers the workflow on push to the main branch
-  workflow_dispatch: # Allows manual trigger
+      - main
+  workflow_dispatch:
 
 jobs:
   render:
@@ -12,32 +12,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Checkout the repository
+      - uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
+      # Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '16' # Match the Node.js version for Remotion
 
-      # Step 3: Install FFmpeg
+      # Install FFmpeg
       - name: Install FFmpeg
         run: |
           sudo apt update
-          sudo apt install -y ffmpeg
+          sudo apt install ffmpeg -y
 
-      # Step 4: Install dependencies
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 5: Render the video
+      # Render the video
       - name: Render video
-        run: npx remotion render src/video.jsx out/video.mp4
+        run: npx remotion render src/index.js demo out/video.mp4
 
-      # Step 6: Upload the rendered video
-      - name: Upload video artifact
+      # Upload the rendered video as an artifact
+      - name: Upload rendered video
         uses: actions/upload-artifact@v3
         with:
           name: rendered-video
