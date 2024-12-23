@@ -1,4 +1,4 @@
-name: Render videos
+name: Render and Split Videos
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   render:
-    name: Render videos
+    name: Render and Split Videos
     runs-on: ubuntu-latest
 
     steps:
@@ -27,22 +27,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Render the videos (each on a separate line)
-      - name: Render videos
+      # Render the entire video
+      - name: Render full video
+        run: npx remotion render src/index.js demo out/full-video.mp4
+
+      # Split the video into 8 parts using FFmpeg
+      - name: Split video into clips
         run: |
-          npx remotion render src/index.js demo out/video1.mp4 --frames=0-449
-          npx remotion render src/index.js demo out/video2.mp4 --frames=450-899
-          npx remotion render src/index.js demo out/video3.mp4 --frames=900-1349
-          npx remotion render src/index.js demo out/video4.mp4 --frames=1350-1799
-          npx remotion render src/index.js demo out/video5.mp4 --frames=1800-2249
-          npx remotion render src/index.js demo out/video6.mp4 --frames=2250-2699
-          npx remotion render src/index.js demo out/video7.mp4 --frames=2700-3149
-          npx remotion render src/index.js demo out/video8.mp4 --frames=3150-3599
+          ffmpeg -i out/full-video.mp4 -ss 00:00:00 -to 00:00:15 -c copy out/video1.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:00:17 -to 00:00:32 -c copy out/video2.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:00:34 -to 00:00:49 -c copy out/video3.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:00:51 -to 00:01:06 -c copy out/video4.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:01:08 -to 00:01:23 -c copy out/video5.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:01:25 -to 00:01:40 -c copy out/video6.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:01:42 -to 00:01:57 -c copy out/video7.mp4
+          ffmpeg -i out/full-video.mp4 -ss 00:01:59 -to 00:02:14 -c copy out/video8.mp4
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
         with:
-          name: rendered-video-${{ github.run_number }}
+          name: rendered-videos-${{ github.run_number }}
           path: |
             out/video1.mp4
             out/video2.mp4

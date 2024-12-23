@@ -7,7 +7,7 @@ export const RemotionRoot = () => {
         id="demo"
         component={YouTube} // Pass the component reference
         fps={30}
-        durationInFrames={3600} // Duration for a 2-minute video at 30 FPS
+        durationInFrames={4000} // Duration for a 2-minute video at 30 FPS
         width={1080}
         height={1920}
       />
