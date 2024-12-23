@@ -27,7 +27,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-<<<<<<< HEAD
       # Render the entire video
       - name: Render full video
         run: npx remotion render src/index.js demo out/full-video.mp4
@@ -43,32 +42,6 @@ jobs:
           ffmpeg -i out/full-video.mp4 -ss 00:01:25 -to 00:01:40 -c copy out/video6.mp4
           ffmpeg -i out/full-video.mp4 -ss 00:01:42 -to 00:01:57 -c copy out/video7.mp4
           ffmpeg -i out/full-video.mp4 -ss 00:01:59 -to 00:02:14 -c copy out/video8.mp4
-=======
-      # Render videos
-      - name: Render video 1
-        run: npx remotion render src/index.js demo out/video1.mp4 --frames=0-449
-
-      - name: Render video 2
-        run: npx remotion render src/index.js demo out/video2.mp4 --frames=450-899
-
-      - name: Render video 3
-        run: npx remotion render src/index.js demo out/video3.mp4 --frames=900-1349
-
-      - name: Render video 4
-        run: npx remotion render src/index.js demo out/video4.mp4 --frames=1350-1799
-
-      - name: Render video 5
-        run: npx remotion render src/index.js demo out/video5.mp4 --frames=1800-2249
-
-      - name: Render video 6
-        run: npx remotion render src/index.js demo out/video6.mp4 --frames=2250-2699
-
-      - name: Render video 7
-        run: npx remotion render src/index.js demo out/video7.mp4 --frames=2700-3149
-
-      - name: Render video 8
-        run: npx remotion render src/index.js demo out/video8.mp4 --frames=3150-3599
->>>>>>> 901485a3bf52e5c2824a1a2ed528bf755758fbf1
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
