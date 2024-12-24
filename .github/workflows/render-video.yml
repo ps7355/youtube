@@ -43,14 +43,14 @@ jobs:
         env:
           FRAME_RATE: ${{ steps.get_frame_rate.outputs.frame_rate }}
         run: |
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,0,449)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,0,449)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video1.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,510,959)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,510,959)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video2.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1020,1469)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,1020,1469)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video3.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1530,1979)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,1530,1979)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video4.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2040,2489)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,2040,2489)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video5.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2550,2999)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,2550,2999)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video6.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3060,3509)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,3060,3509)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video7.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3570,4019)',setpts=N/${FRAME_RATE}*TB" -af "aselect='between(n,3570,4019)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a copy out/video8.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,0,449)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,0,449)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video1.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,510,959)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,510,959)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video2.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1020,1469)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,1020,1469)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video3.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1530,1979)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,1530,1979)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video4.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2040,2489)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,2040,2489)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video5.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2550,2999)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,2550,2999)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video6.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3060,3509)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,3060,3509)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video7.mp4
+          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3570,4019)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,3570,4019)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video8.mp4
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
