@@ -48,17 +48,10 @@ const YouTube = () => {
   const frame = useCurrentFrame();
   const fps = 30;
   const segmentDurationInFrames = fps * 15; // Duration of one segment in frames (15 seconds)
-  const blackScreenDuration = fps * 2; // 2 seconds black screen
 
   // Calculate the segment index (there are 8 segments in total)
-  const totalSegmentDuration = segmentDurationInFrames + blackScreenDuration;
-  const segmentIndex = Math.floor(frame / totalSegmentDuration);
-  const startFrame = segmentIndex * totalSegmentDuration;
-
-  // Determine if the current frame is within the black screen
-  const isBlackScreen =
-    frame >= startFrame + segmentDurationInFrames &&
-    frame < startFrame + totalSegmentDuration;
+  const segmentIndex = Math.floor(frame / segmentDurationInFrames);
+  const startFrame = segmentIndex * segmentDurationInFrames;
 
   // Calculate the image index based on the current segment and time
   const imageIndex = Math.floor(((frame - startFrame) % segmentDurationInFrames) / (fps * 5));
@@ -68,10 +61,8 @@ const YouTube = () => {
   const transitionDuration = fps * 1;
   const transitionStartFrame = startFrame + imageIndex * (fps * 5);
   const opacity =
-    imageIndex === 0 || isBlackScreen
-      ? isBlackScreen
-        ? 0
-        : 1
+    imageIndex === 0
+      ? 1
       : interpolate(
           frame,
           [transitionStartFrame, transitionStartFrame + transitionDuration],
@@ -79,8 +70,7 @@ const YouTube = () => {
           { extrapolateRight: "clamp" }
         );
 
-  // Audio Logic: Replicate Original Behavior
-  const audioDurationInFrames = fps * 15;
+  // Audio Logic 
   const audioIndex = segmentIndex % audioFiles.length;
 
   return (
@@ -98,41 +88,25 @@ const YouTube = () => {
         }}
       />
 
-      {/* Black screen */}
-      {isBlackScreen && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "black",
-          }}
-        />
-      )}
-
       {/* Display the current image with transition */}
-      {!isBlackScreen && (
-        <Img
-          src={images[imageFileIndex]}
-          alt={`Image ${imageFileIndex + 1}`}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            maxWidth: "80%",
-            maxHeight: "80%",
-            objectFit: "contain",
-            opacity,
-          }}
-        />
-      )}
+      <Img
+        src={images[imageFileIndex]}
+        alt={`Image ${imageFileIndex + 1}`}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          maxWidth: "80%",
+          maxHeight: "80%",
+          objectFit: "contain",
+          opacity,
+        }}
+      />
 
-      {/* Audio Loop - Replicating Original Code's Logic */}
-      <Sequence from={startFrame} durationInFrames={audioDurationInFrames}>
-        <Audio src={audioFiles[audioIndex]} volume={0.1} />
+      {/* Audio Loop - Using Sequence per segment */}
+      <Sequence from={startFrame} durationInFrames={segmentDurationInFrames}>
+          <Audio src={audioFiles[audioIndex]} volume={0.1} />
       </Sequence>
     </div>
   );

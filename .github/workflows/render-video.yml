@@ -1,4 +1,4 @@
-name: Render and Split Videos
+name: Render videos
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   render:
-    name: Render and Split Videos
+    name: Render videos
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install FFmpeg and ffprobe
+      - name: Install FFmpeg
         run: |
           sudo apt update
           sudo apt install ffmpeg -y
@@ -27,35 +27,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Render the entire video
-      - name: Render full video
-        run: npx remotion render src/index.js demo out/full-video.mp4
-
-      # Get the video frame rate using ffprobe
-      - name: Get video frame rate
-        id: get_frame_rate
+      # Render the videos (each on a separate line)
+      - name: Render videos
         run: |
-          FRAME_RATE=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 out/full-video.mp4)
-          echo "::set-output name=frame_rate::$FRAME_RATE"
-
-      # Split the video into 8 parts using FFmpeg and frame numbers
-      - name: Split video into clips by frames
-        env:
-          FRAME_RATE: ${{ steps.get_frame_rate.outputs.frame_rate }}
-        run: |
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,0,449)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,0,449)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video1.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,510,959)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,510,959)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video2.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1020,1469)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,1020,1469)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video3.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,1530,1979)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,1530,1979)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video4.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2040,2489)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,2040,2489)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video5.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,2550,2999)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,2550,2999)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video6.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3060,3509)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,3060,3509)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video7.mp4
-          ffmpeg -i out/full-video.mp4 -filter:v "select='between(n,3570,4019)',setpts=N/${FRAME_RATE}*TB" -filter:a "aselect='between(n,3570,4019)',asetpts=N/SR/TB" -c:v libx264 -crf 18 -preset veryslow -c:a aac -b:a 192k out/video8.mp4
+          npx remotion render src/index.js demo out/video1.mp4 --frames=0-449
+          npx remotion render src/index.js demo out/video2.mp4 --frames=450-899
+          npx remotion render src/index.js demo out/video3.mp4 --frames=900-1349
+          npx remotion render src/index.js demo out/video4.mp4 --frames=1350-1799
+          npx remotion render src/index.js demo out/video5.mp4 --frames=1800-2249
+          npx remotion render src/index.js demo out/video6.mp4 --frames=2250-2699
+          npx remotion render src/index.js demo out/video7.mp4 --frames=2700-3149
+          npx remotion render src/index.js demo out/video8.mp4 --frames=3150-3599
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
         with:
-          name: rendered-videos-${{ github.run_number }}
+          name: rendered-video-${{ github.run_number }}
           path: |
             out/video1.mp4
             out/video2.mp4
