@@ -35,6 +35,9 @@ const images = [
   staticFile("1 (22).jpeg"),
   staticFile("1 (23).jpeg"),
   staticFile("1 (24).jpeg"),
+  staticFile("1 (25).jpeg"),
+  staticFile("1 (26).jpeg"),
+  staticFile("1 (27).jpeg"),
 ];
 
 // Explicitly list all 3 audio files
