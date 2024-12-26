@@ -30,20 +30,20 @@ jobs:
       # Render the videos (each on a separate line)
       - name: Render videos
         run: |
-          npx remotion render src/index.js demo out/video1.mp4 --frames=0-449
-          npx remotion render src/index.js demo out/video2.mp4 --frames=450-899
-          npx remotion render src/index.js demo out/video3.mp4 --frames=900-1349
-          npx remotion render src/index.js demo out/video4.mp4 --frames=1350-1799
-          npx remotion render src/index.js demo out/video5.mp4 --frames=1800-2249
-          npx remotion render src/index.js demo out/video6.mp4 --frames=2250-2699
-          npx remotion render src/index.js demo out/video7.mp4 --frames=2700-3149
-          npx remotion render src/index.js demo out/video8.mp4 --frames=3150-3599
-          npx remotion render src/index.js demo out/video9.mp4 --frames=3600-3999
+          npx remotion render src/index.js demo out/video1.mp4 --frames=0-269
+          npx remotion render src/index.js demo out/video2.mp4 --frames=270-539
+          npx remotion render src/index.js demo out/video3.mp4 --frames=540-809
+          npx remotion render src/index.js demo out/video4.mp4 --frames=810-1079
+          npx remotion render src/index.js demo out/video5.mp4 --frames=1080-1349
+          npx remotion render src/index.js demo out/video6.mp4 --frames=1350-1619
+          npx remotion render src/index.js demo out/video7.mp4 --frames=1620-1889
+          npx remotion render src/index.js demo out/video8.mp4 --frames=1890-2159
+          npx remotion render src/index.js demo out/video9.mp4 --frames=2160-2429
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
         with:
-          name: rendered-video-${{ github.run_number }}
+          name: rendered-videos-${{ github.run_number }}
           path: |
             out/video1.mp4
             out/video2.mp4

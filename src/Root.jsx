@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import YouTube from "./video"
+import { Balloons } from "./lottie";
 export const RemotionRoot = () => {
   return (
     <>
@@ -11,6 +12,14 @@ export const RemotionRoot = () => {
         width={1080}
         height={1920}
       />
+       {/* <Composition
+      id="LottieExample"
+      component={Balloons}
+      durationInFrames={200}
+      fps={30}
+      width={1920}
+      height={1080}
+    /> */}
     </>
   );
 };
