@@ -44,7 +44,7 @@ jobs:
           npx remotion render src/index.js demo out/video14.mp4 --frames=3510-3779
           npx remotion render src/index.js demo out/video15.mp4 --frames=3780-4049
           npx remotion render src/index.js demo out/video16.mp4 --frames=4050-4319
-          npx remotion render src/index.js demo out/video17.mp4 --frames=4320-4589
+          npx remotion render src/index.js demo out/video17.mp4 --frames=4320-4585
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
