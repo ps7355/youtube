@@ -18,32 +18,32 @@ const mediaFiles = [
   { type: "image", src: staticFile("1 (3).jpeg") },
   { type: "image", src: staticFile("1 (4).jpeg") },
   { type: "image", src: staticFile("1 (5).jpeg") },
-  { type: "video", src: staticFile("video1 (1).mp4") }, // Video 1
+  { type: "video", src: staticFile("video1.mp4") }, // Video 1
   { type: "image", src: staticFile("1 (7).jpeg") },
   { type: "image", src: staticFile("1 (8).jpeg") },
   { type: "image", src: staticFile("1 (9).jpeg") },
   { type: "image", src: staticFile("1 (10).jpeg") },
-  { type: "video", src: staticFile("video1 (2).mp4") }, // Video 2
+  { type: "video", src: staticFile("video2.mp4") }, // Video 2
   { type: "image", src: staticFile("1 (12).jpeg") },
   { type: "image", src: staticFile("1 (13).jpeg") },
   { type: "image", src: staticFile("1 (14).jpeg") },
   { type: "image", src: staticFile("1 (15).jpeg") },
-  { type: "video", src: staticFile("video1 (3).mp4") }, // Video 3
+  { type: "video", src: staticFile("video3.mp4") }, // Video 3
   { type: "image", src: staticFile("1 (16).jpeg") },
   { type: "image", src: staticFile("1 (17).jpeg") },
   { type: "image", src: staticFile("1 (18).jpeg") },
   { type: "image", src: staticFile("1 (19).jpeg") },
-  { type: "video", src: staticFile("video1 (4).mp4") }, // Video 4
+  { type: "video", src: staticFile("video4.mp4") }, // Video 4
   { type: "image", src: staticFile("1 (20).jpeg") },
   { type: "image", src: staticFile("1 (21).jpeg") },
   { type: "image", src: staticFile("1 (22).jpg") },
   { type: "image", src: staticFile("1 (23).jpg") },
-  { type: "video", src: staticFile("video1 (5).mp4") }, // Video 5
+  { type: "video", src: staticFile("video5.mp4") }, // Video 5
   { type: "image", src: staticFile("1 (24).jpg") },
   { type: "image", src: staticFile("1 (25).jpg") },
   { type: "image", src: staticFile("1 (26).jpg") },
   { type: "image", src: staticFile("1 (27).jpg") },
-  { type: "video", src: staticFile("video1 (6).mp4") }, // Video 6
+  { type: "video", src: staticFile("video6.mp4") }, // Video 6
   { type: "image", src: staticFile("1 (28).jpg") },
   { type: "image", src: staticFile("1 (29).jpg") },
   { type: "image", src: staticFile("1 (30).jpg") },
@@ -55,6 +55,8 @@ const audioFiles = [
   staticFile("audio1.mp3"),
   staticFile("audio2.mp3"),
   staticFile("audio3.mp3"),
+  staticFile("audio4.mp3"),
+  staticFile("audio5.mp3")
 ];
 
 const YouTube = () => {
