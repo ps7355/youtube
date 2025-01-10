@@ -3,17 +3,19 @@ import YouTube from "./memes";
 import { Balloons } from "./lottie";
 import demo from "./lottie";
 import Riddle from "./demo";
+import VideoPlayer from "./demo";
+import elevenaudio from "./elevenlabs";
 export const RemotionRoot = () => {
   return (
     <>
-      <Composition
+      {/* <Composition
         id="demo"
-        component={YouTube} // Pass the component reference
+        component={Riddle} // Pass the component reference
         fps={30}
-        durationInFrames={4589} // Duration for a 2-minute video at 30 FPS
+        durationInFrames={1500} // Duration for a 2-minute video at 30 FPS
         width={1080}
         height={1920}
-      />
+      /> */}
        {/* <Composition
       id="LottieExample"
       component={Balloons}
@@ -22,14 +24,14 @@ export const RemotionRoot = () => {
       width={1920}
       height={1080}
     /> */}
-    {/* <Composition
+    <Composition
     id="demo"
-    component={demo}
-    durationInFrames={1000}
+    component={YouTube}
+    durationInFrames={5400}
     fps={30}
-    width={1920}
-    height={1080}
-    /> */}
+    width={1080}
+    height={1920}
+    />
     </>
   );
 };

@@ -25,7 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Render the videos (each on a separate line)
       - name: Render videos
         run: |
           npx remotion render src/index.js demo out/video1.mp4 --frames=0-269
@@ -44,7 +43,10 @@ jobs:
           npx remotion render src/index.js demo out/video14.mp4 --frames=3510-3779
           npx remotion render src/index.js demo out/video15.mp4 --frames=3780-4049
           npx remotion render src/index.js demo out/video16.mp4 --frames=4050-4319
-          npx remotion render src/index.js demo out/video17.mp4 --frames=4320-4585
+          npx remotion render src/index.js demo out/video17.mp4 --frames=4320-4589
+          npx remotion render src/index.js demo out/video18.mp4 --frames=4590-4859
+          npx remotion render src/index.js demo out/video19.mp4 --frames=4860-5129
+          npx remotion render src/index.js demo out/video20.mp4 --frames=5130-5395
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
@@ -68,3 +70,6 @@ jobs:
             out/video15.mp4
             out/video16.mp4
             out/video17.mp4
+            out/video18.mp4
+            out/video19.mp4
+            out/video20.mp4

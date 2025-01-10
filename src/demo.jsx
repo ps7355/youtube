@@ -1,5 +1,13 @@
-import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate, spring } from "remotion";
-import React, { useState, useEffect } from 'react';
+import {
+  AbsoluteFill,
+  Img,
+  staticFile,
+  useCurrentFrame,
+  interpolate,
+  Video,
+  Audio
+} from "remotion";
+import React, { useState, useEffect } from "react";
 
 const Riddle = () => {
   const frame = useCurrentFrame();
@@ -16,8 +24,8 @@ const Riddle = () => {
   const shakeX = Math.sin(frame / 15) * 1.5;
   const rotation = Math.sin(frame / 20) * 4;
 
-  // List of images
-  const images = [
+  // List of hand images
+  const handImages = [
     "Hand_01.png",
     "Hand_02.png",
     "Hand_03.png",
@@ -28,55 +36,80 @@ const Riddle = () => {
     "Hand_08.png",
   ];
 
-  let imageIndex;
+  // List of paper images
+  const paperImages = [
+    "paper1.png",
+    "paper2.png",
+    "paper3.png",
+    "paper4.png",
+    "paper5.png",
+    "paper6.png",
+    "paper7.png",
+    "paper8.png",
+  ];
 
+  let handImageIndex;
+  let showPaper = false;
+  let paperImageIndex = 0;
+
+  // --- Hand Image Index Logic ---
   if (frame <= 80) {
-    imageIndex = Math.floor(frame / 10);
+    handImageIndex = Math.floor(frame / 10);
   } else {
     const loopFrames = frame - 80;
     const loopSequence = [7, 6, 5, 6, 7];
     const framesPerImage = 10;
     const loopIndex = Math.floor(loopFrames / framesPerImage) % loopSequence.length;
-    imageIndex = loopSequence[loopIndex];
+    handImageIndex = loopSequence[loopIndex];
   }
 
-  if (imageIndex < 0 || imageIndex >= images.length || isNaN(imageIndex)) {
-    console.error(`Invalid imageIndex: ${imageIndex}`);
-    imageIndex = 0;
+  if (handImageIndex < 0 || handImageIndex >= handImages.length || isNaN(handImageIndex)) {
+    console.error(`Invalid handImageIndex: ${handImageIndex}`);
+    handImageIndex = 0;
   }
 
-  // --- Div Opening Animation (Adjusted for Higher Position) ---
+  // --- Paper Unfolding Logic ---
+  const paperUnfoldStartFrame = 40; // Start when hand reaches image index 4
+  const paperUnfoldDuration = 80; // 8 images over 80 frames (10 frames per image)
 
-  const openingStartFrame = 30;
-  const openingDuration = 60;
+  if (
+    frame >= paperUnfoldStartFrame &&
+    frame < paperUnfoldStartFrame + paperUnfoldDuration
+  ) {
+    showPaper = true;
+    paperImageIndex = Math.floor(
+      (frame - paperUnfoldStartFrame) / (paperUnfoldDuration / paperImages.length)
+    );
+  }
 
-  const openingProgress = interpolate(
+  if (paperImageIndex < 0 || paperImageIndex >= paperImages.length) {
+    console.error(`Invalid paperImageIndex: ${paperImageIndex}`);
+    paperImageIndex = 0;
+  }
+
+  // --- Keep Paper 8 Visible ---
+  const showPaper8 = frame >= paperUnfoldStartFrame + paperUnfoldDuration;
+
+  // Paper upward movement
+  const paperMove = interpolate(
     frame,
-    [openingStartFrame, openingStartFrame + openingDuration],
-    [0, 1],
+    [
+      paperUnfoldStartFrame,
+      paperUnfoldStartFrame + paperUnfoldDuration,
+      paperUnfoldStartFrame + paperUnfoldDuration + 1,
+    ],
+    [90, 25, 25], // Start even lower at 90%, end at 25%
     { extrapolateRight: "clamp" }
   );
-
-  const widthProgress = spring({
-    fps: 60,
-    frame: frame - openingStartFrame,
-    config: {
-      damping: 20,
-      stiffness: 100,
-      mass: 0.5
-    },
-    durationInFrames: openingDuration
-  })
-
-  const divWidth = interpolate(widthProgress, [0, 1], [0, 0.9]);
 
   // --- Typewriter Effect ---
   const riddleText = "What has keys but can't open locks?";
   const answerText = "A Piano!";
+  const typingStartFrame = paperUnfoldStartFrame + paperUnfoldDuration; // Typing starts when paper unfolding ends
   const typingDuration = 60; // Duration for typing the riddle
   const textDisplayProgress = interpolate(
     frame,
-    [openingStartFrame + openingDuration, openingStartFrame + openingDuration + typingDuration],
+    [typingStartFrame, typingStartFrame + typingDuration],
     [0, 1],
     { extrapolateRight: "clamp" }
   );
@@ -85,7 +118,11 @@ const Riddle = () => {
 
   // --- Timer and Answer Reveal ---
   useEffect(() => {
-    if (frame === openingStartFrame + openingDuration + typingDuration + 30 && timer > 0) { // Start timer 0.5 seconds (30 frames at 60fps) after typing is complete
+    if (
+      frame === typingStartFrame + typingDuration + 30 &&
+      timer > 0
+    ) {
+      // Start timer 0.5 seconds (30 frames at 60fps) after typing is complete
       const interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 500); // Decrease timer every 0.5 seconds (30 frames)
@@ -98,52 +135,82 @@ const Riddle = () => {
     }
   }, [frame, timer]);
 
+  // Further reduced scale factor
+  const scaleFactor = 1.5; // Reduced from 2
+
   return (
-    <AbsoluteFill style={{ backgroundColor: "#00FF85" }}>
-      {/* Opening Div */}
-      <AbsoluteFill
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: `${divWidth * 100}%`,
-          height: "50%",
-          backgroundColor: "#38003D",
-          marginLeft: `${(1 - divWidth) / 2 * 100}%`,
-          marginTop: "15%" // Adjusted position to be higher
-        }}
-      >
-        {/* Riddle & Answer Text Container */}
+    <AbsoluteFill>
+      {/* Background Video */}
+      <Video src={staticFile("back.mp4")} style={{ width: "100%", height: "100%" }} />
+
+      {/* Hand Image (Always visible) */}
+      <AbsoluteFill>
+        <Img
+          src={staticFile(handImages[handImageIndex])}
+          style={{
+            marginTop: `${handMove}%`,
+            transform: `translateX(${shakeX}px) rotate(${rotation}deg)`,
+          }}
+        />
+      </AbsoluteFill>
+
+      {/* Paper Image */}
+      {showPaper && (
+        <Img
+          src={staticFile(paperImages[paperImageIndex])}
+          style={{
+            position: "absolute",
+            left: "50%",
+            transform: `translateX(-50%) scale(${scaleFactor})`,
+            marginTop: `${paperMove}%`,
+            transformOrigin: "bottom",
+          }}
+        />
+      )}
+
+      {/* Paper 8 (Visible after unfolding) */}
+      {showPaper8 && (
+        <Img
+          src={staticFile(paperImages[7])} // paper8.png
+          style={{
+            position: "absolute",
+            left: "50%",
+            transform: `translateX(-50%) scale(${scaleFactor})`,
+            marginTop: `${paperMove}%`, // Use the final position from paperMove
+            transformOrigin: "bottom",
+          }}
+        />
+      )}
+
+      {/* Text Container */}
+      {frame >= typingStartFrame && (
         <div
           style={{
-            opacity: openingProgress,
+            position: "absolute",
+            top: "5%", // Adjust vertical position to be above the paper
+            left: "50%",
+            transform: "translateX(-50%)",
             textAlign: "center",
             color: "white",
             fontSize: 40,
             fontFamily: "Arial",
-            padding: 20,
-            width: "100%"
+            width: "80%",
           }}
         >
           {/* Display the riddle with typewriter effect */}
           {!showAnswer && displayedRiddle}
           {/* Show timer if not showing answer */}
-          {!showAnswer && frame >= openingStartFrame + openingDuration + typingDuration + 30 && (
-            <div style={{ marginTop: 20 }}>{timer}</div>
-          )}
+          {!showAnswer &&
+            frame >= typingStartFrame + typingDuration + 30 && (
+              <div style={{ marginTop: 20 }}>{timer}</div>
+            )}
           {/* Show answer after timer */}
           {showAnswer && <div style={{ marginTop: 20 }}>{answerText}</div>}
         </div>
-      </AbsoluteFill>
+      )}
 
-      {/* Hand Image */}
-      <Img
-        src={staticFile(images[imageIndex])}
-        style={{
-          marginTop: `${handMove}%`,
-          transform: `translateX(${shakeX}px) rotate(${rotation}deg)`,
-        }}
-      />
+      {/* Add Audio */}
+      <Audio src={staticFile("audio4.mp3")} volume={0.5} />
     </AbsoluteFill>
   );
 };
