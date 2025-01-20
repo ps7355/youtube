@@ -33,20 +33,7 @@ jobs:
           npx remotion render src/index.js demo out/video4.mp4 --frames=810-1079
           npx remotion render src/index.js demo out/video5.mp4 --frames=1080-1349
           npx remotion render src/index.js demo out/video6.mp4 --frames=1350-1619
-          npx remotion render src/index.js demo out/video7.mp4 --frames=1620-1889
-          npx remotion render src/index.js demo out/video8.mp4 --frames=1890-2159
-          npx remotion render src/index.js demo out/video9.mp4 --frames=2160-2429
-          npx remotion render src/index.js demo out/video10.mp4 --frames=2430-2699
-          npx remotion render src/index.js demo out/video11.mp4 --frames=2700-2969
-          npx remotion render src/index.js demo out/video12.mp4 --frames=2970-3239
-          npx remotion render src/index.js demo out/video13.mp4 --frames=3240-3509
-          npx remotion render src/index.js demo out/video14.mp4 --frames=3510-3779
-          npx remotion render src/index.js demo out/video15.mp4 --frames=3780-4049
-          npx remotion render src/index.js demo out/video16.mp4 --frames=4050-4319
-          npx remotion render src/index.js demo out/video17.mp4 --frames=4320-4589
-          npx remotion render src/index.js demo out/video18.mp4 --frames=4590-4859
-          npx remotion render src/index.js demo out/video19.mp4 --frames=4860-5129
-          npx remotion render src/index.js demo out/video20.mp4 --frames=5130-5395
+         
 
       - name: Upload rendered videos
         uses: actions/upload-artifact@v3
@@ -59,17 +46,4 @@ jobs:
             out/video4.mp4
             out/video5.mp4
             out/video6.mp4
-            out/video7.mp4
-            out/video8.mp4
-            out/video9.mp4
-            out/video10.mp4
-            out/video11.mp4
-            out/video12.mp4
-            out/video13.mp4
-            out/video14.mp4
-            out/video15.mp4
-            out/video16.mp4
-            out/video17.mp4
-            out/video18.mp4
-            out/video19.mp4
-            out/video20.mp4
+             

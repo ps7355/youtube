@@ -13,46 +13,19 @@ import { Lottie } from "@remotion/lottie";
 
 // Data structure to hold images
 const mediaFiles = [
-  { type: "image", src: staticFile("15.jpeg") },
-  { type: "image", src: staticFile("31.png") },
-  { type: "image", src: staticFile("4.jpeg") },
-  { type: "image", src: staticFile("33.jpg") },
-  { type: "image", src: staticFile("20.jpeg") },
-  { type: "image", src: staticFile("27.jpeg") },
-  { type: "image", src: staticFile("3.jpeg") },
-  { type: "image", src: staticFile("37.jpg") },
-  { type: "image", src: staticFile("12.jpeg") },
-  { type: "image", src: staticFile("39.jpg") },
-  { type: "image", src: staticFile("24.jpeg") },
-  { type: "image", src: staticFile("9.jpeg") },
-  { type: "image", src: staticFile("28.png") },
-  { type: "image", src: staticFile("22.jpeg") },
-  { type: "image", src: staticFile("6.jpeg") },
-  { type: "image", src: staticFile("35.jpg") },
-  { type: "image", src: staticFile("10.jpeg") },
   { type: "image", src: staticFile("1.jpeg") },
-  { type: "image", src: staticFile("29.png") },
-  { type: "image", src: staticFile("19.jpeg") },
-  { type: "image", src: staticFile("7.jpeg") },
-  { type: "image", src: staticFile("14.jpeg") },
-  { type: "image", src: staticFile("36.jpg") },
-  { type: "image", src: staticFile("8.jpeg") },
-  { type: "image", src: staticFile("26.jpeg") },
   { type: "image", src: staticFile("2.jpeg") },
-  { type: "image", src: staticFile("38.jpg") },
-  { type: "image", src: staticFile("18.jpeg") },
-  { type: "image", src: staticFile("30.png") },
-  { type: "image", src: staticFile("21.jpeg") },
-  { type: "image", src: staticFile("16.jpeg") },
-  { type: "image", src: staticFile("25.jpeg") },
-  { type: "image", src: staticFile("11.jpeg") },
-  { type: "image", src: staticFile("34.jpg") },
-  { type: "image", src: staticFile("17.jpeg") },
-  { type: "image", src: staticFile("40.jpg") },
-  { type: "image", src: staticFile("13.jpeg") },
-  { type: "image", src: staticFile("23.jpeg") },
+  { type: "image", src: staticFile("3.jpeg") },
+  { type: "image", src: staticFile("4.jpeg") },
   { type: "image", src: staticFile("5.jpeg") },
-  { type: "image", src: staticFile("32.jpeg") },
+  { type: "image", src: staticFile("6.jpeg") },
+  { type: "image", src: staticFile("7.jpeg") },
+  { type: "image", src: staticFile("8.jpeg") },
+  { type: "image", src: staticFile("9.jpeg") },
+  { type: "image", src: staticFile("10.jpeg") },
+  { type: "image", src: staticFile("11.jpeg") },
+  { type: "image", src: staticFile("12.jpeg") },
+
 ];
 
 // Audio files
@@ -60,8 +33,7 @@ const audioFiles = [
   staticFile("audio1.mp3"),
   staticFile("audio2.mp3"),
   staticFile("audio3.mp3"),
-  staticFile("audio4.mp3"),
-  staticFile("audio5.mp3"),
+
 ];
 
 const YouTube = () => {

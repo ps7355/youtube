@@ -27,7 +27,7 @@ export const RemotionRoot = () => {
     <Composition
     id="demo"
     component={YouTube}
-    durationInFrames={5400}
+    durationInFrames={1622}
     fps={30}
     width={1080}
     height={1920}
